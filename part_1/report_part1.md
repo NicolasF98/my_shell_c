@@ -17,9 +17,13 @@ Sur chaque ligne lue la fonction ` executer_ligne_commande ` découpe une ligne 
     Chaque mot devient une chaine, on remplace tous les ` ` par des `\0`, la variable `ligne_decoupee` stock toutes les adresses mémoire de chaque début de mot.
     Si la ligne est vide on retourn `NULL`.
 
-    
+## 2 - Lecture d'une ligne:
 
-    
+#### *[c]:*
+
+
+
+
 
 
 

@@ -5,15 +5,27 @@
 #include "lignes.h"
 
 int lire_ligne_fichier(FILE * fichier, char *ligne) {
-/*************** A COMPLETER ******************/
     /*
        Lecture d'une ligne depuis un fichier avec stockage de la ligne lue
-       dans la variable ligne. Ne pas inclure le '\n' final dans la variable
-       ligne, ne pas oublier de completer la ligne avec un '\0' terminal.
-       La valeur de retour doit etre 0 s'il n'y a plus rien a lire (fin de
+       dans la variable ligne. Le '\n' final n'est pas inclu dans la variable
+       ligne et est remplace par '\0'.
+       La valeur de retour est 0 s'il n'y a plus rien a lire (fin de
        fichier sans avoir lu aucun caractere) et 1 sinon.
      */
-/**********************************************/
+
+    int i=0;
+    char c;
+    fscanf(fichier,"%c",&c);
+    while(!feof(fichier)){
+        while(c!='\n'){
+            ligne[i]=c;
+            i++;
+            fscanf(fichier,"%c",&c);
+        }
+        ligne[i]='\0';
+        return 1;
+    }
+    ligne[i]='\0';
     return 0;
 }
 
