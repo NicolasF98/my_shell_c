@@ -19,7 +19,17 @@ Sur chaque ligne lue la fonction ` executer_ligne_commande ` découpe une ligne 
 
 ## 2 - Lecture d'une ligne:
 
-#### *[c]:*
+#### *[d]:*
+
+Done.
+
+#### *[d]:*
+
+Toutes commandes sans arguments est executés.
+
+## 3 - Gestin d'un ensemble des variables:
+
+
 
 
 

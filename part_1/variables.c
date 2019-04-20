@@ -7,15 +7,13 @@
 #include "variables.h"
 
 void init_variables(variables * ens) {
-/*************** A COMPLETER ******************/
     /* 
-       Initialiser a un ensemble vide.
+       Initialisation d'un ensemble vide.
      */
-/**********************************************/
+    ens->nb=0;
 }
 
 int ajouter_variable(variables * ens, char *nom, char *valeur) {
-/*************** A COMPLETER ******************/
     /*
        Fonction qui affecte la valeur donnee au nom de variable donne.
        Si la variable existe deja dans les variables definies, il suffit juste
@@ -24,7 +22,7 @@ int ajouter_variable(variables * ens, char *nom, char *valeur) {
        de variables. Dans tous les cas, la fonction retourne l'indice de la
        variable ajout�e.
      */
-/**********************************************/
+    
     return -1;
 }
 
