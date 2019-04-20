@@ -1,1 +1,2 @@
-# my_shell_c
+# Creating my own shell in C langage
+
