@@ -7,7 +7,7 @@
 int lire_ligne_fichier(FILE * fichier, char *ligne) {
     /*
        Lecture d'une ligne depuis un fichier avec stockage de la ligne lue
-       dans la variable ligne. Le '\n' final n'est pas inclu dans la variable
+       dans la variable ligne. Le '\n' final de chaque ligne n'est pas inclu dans la variable
        ligne et est remplace par '\0'.
        La valeur de retour est 0 s'il n'y a plus rien a lire (fin de
        fichier sans avoir lu aucun caractere) et 1 sinon.

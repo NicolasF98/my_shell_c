@@ -22,60 +22,68 @@ int ajouter_variable(variables * ens, char *nom, char *valeur) {
        de variables. Dans tous les cas, la fonction retourne l'indice de la
        variable ajout�e.
      */
-    
-    return -1;
+    int i=0;
+    int n=ens->nb;
+    while(i!=ens->nb){
+        if(nom==ens->T[i].nom){
+            strcpy(ens->T[i].valeur,valeur);
+            return i;
+        }
+        i++;
+    }
+    strcpy(ens->T[n+1].nom,nom);
+    strcpy(ens->T[n+1].valeur,valeur);
+    return (n+1);
 }
 
 int nombre_variables(variables * ens) {
-/*************** A COMPLETER ******************/
     /*
        Fonction qui renvoie le nombre de variables dans l'ensemble.
      */
-/**********************************************/
-    return 0;
+    int n=ens->nb;
+    return n;
 }
 
 int trouver_variable(variables * ens, char *nom) {
-    int i = 0;
-
-/*************** A COMPLETER ******************/
     /*
        Fonction qui recherche le nom de variable dans l'ensemble
        des variables definies. Si le nom est trouve, la fonction retourne
        l'indice correspondant dans le tableau, dans le cas
        contraire elle retourne -1.
      */
-/**********************************************/
-    return i;
+    int i = 0;
+    for(;i!=ens->nb;i++){
+        if(ens->T[i].nom==nom){
+            return i;
+        }
+    }
+    return -1;
 }
 
 char *nom_variable(variables * ens, int i) {
-/*************** A COMPLETER ******************/
     /*
        Fonction qui renvoie le nom de la variable a l'indice i ou
        NULL si elle n'existe pas.
      */
-/**********************************************/
-    return NULL;
+    if(ens->nb<i) return NULL;
+    return ens->T[i].nom;;
 }
 
 char *valeur_variable(variables * ens, int i) {
-/*************** A COMPLETER ******************/
     /*
        Fonction qui renvoie la valeur de la variable a l'indice i ou
        "" si elle n'existe pas.
      */
-/**********************************************/
-    return "";
+    if(ens->nb<i) return "";
+    return ens->T[i].valeur;
 }
 
 void modifier_valeur_variable(variables * ens, int i, char *valeur) {
-/*************** A COMPLETER ******************/
     /*
        Fonction qui modifie la valeur de la variable a l'indice i.
        Comportement indeterminee si l'indice i n'est pas valide.
      */
-/**********************************************/
+    strcpy(ens->T[i].valeur,valeur);
 }
 
 void afficher_ensemble_variables(variables * ens) {
@@ -85,7 +93,6 @@ void afficher_ensemble_variables(variables * ens) {
 }
 
 int trouver_et_appliquer_affectation_variable(variables * ens, char *ligne) {
-/*************** A COMPLETER ******************/
     /*
        Fonction qui cherche a reconnaitre une affectation de variable dans le 
        morceau de ligne de commande transmise et, le cas echeant, l'applique. 
@@ -96,20 +103,35 @@ int trouver_et_appliquer_affectation_variable(variables * ens, char *ligne) {
        trouve une affectation. Retourne 1 en cas d'affectation trouvee, 0 dans le
        cas contraire.
      */
-/**********************************************/
+    int i=0,j=0;  /* on utilise 2 compteur: `i`pour parcourir la ligne; `j` pour parcourir le tableau `n` */
+    char *n=NULL; /* création tableau vide */
+
+    while(ligne[i]!='\0'){
+        if(strcmp(&ligne[i]," ")!=0){       /* si la valeur de ligne[i] est différente d'un espace... */
+            n[j]=ligne[i];
+            if(strcmp(&ligne[i],"=")==0 && strcmp(&ligne[i+1]," ")!=0){         /* si la valeur de ligne[i] est identique à "=" ET si ligne[i+1] est différente d'un espace... */
+                strcpy(ens->T[0].nom,n);      /* le mot analysé est stocké dans le tableau `T` dans la cas `nom` à l'indice `k` */
+                strcpy(n,"");        /* on vide notre variable n */
+                j=0;         /* l'indexe de la variable n est remit à 0 */
+            }
+        }
+        i++;         /* on cherche la valeur de `nom` en bouclant temps que ligneet stockant,  */
+        j++;
+    }
+    strcpy(ens->T[0].valeur,n);
+
     return 0;
 }
 
 void appliquer_expansion_variables(variables * ens, char *ligne_originale, char *ligne_expansee) {
-/*************** A COMPLETER ******************/
 /*
   Fonction qui prend une ligne lue en parametre et la recopie dans le tableau
-  resultat en remplacant toutes les utilisations de variable (de la forme
+  resultat(==ligne_expansee) en remplacant toutes les utilisations de variable (de la forme
   '$nom' ou nom est une chaine de caracteres alphanumeriques ou * ou #) par la
   valeur de la variable correspondante.
 */
-/**********************************************/
     // A remplacer : le code ci-dessous n'expanse rien
+
     strcpy(ligne_expansee, ligne_originale);
 }
 
