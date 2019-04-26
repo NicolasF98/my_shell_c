@@ -12,3 +12,5 @@ void aller_a_la_ligne(int numero);
 int obtenir_numero_ligne();
 
 #endif
+
+/* valide */
