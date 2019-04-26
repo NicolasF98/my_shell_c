@@ -111,7 +111,7 @@ int trouver_et_appliquer_affectation_variable(variables * ens, char *ligne) {
        cas contraire.
      */
     /* Dans cette situation, l'utilisation d'un automate est pratiquement obligatoire 
-    car nous devons nous memoriser dans quel etat nous somme. */
+    car nous devons memoriser dans quel etat nous somme. */
     enum { ESP_DEB, NOM, EGAL, VAL, ERR } etat=ESP_DEB;
 	int affectation=0;
 	char *nom=NULL, *val=NULL;
@@ -119,7 +119,6 @@ int trouver_et_appliquer_affectation_variable(variables * ens, char *ligne) {
 
 	while (ligne[i]!='\0' && etat!=ERR) {
 		switch (etat) {
-
 		case ESP_DEB:
 			switch (ligne[i]) {
 			case '=': etat=ERR     ; break;
@@ -130,7 +129,6 @@ int trouver_et_appliquer_affectation_variable(variables * ens, char *ligne) {
 				break;
 			}
 			break;
-
 		case NOM:
 			switch (ligne[i]) {
 			case '=':
@@ -142,7 +140,6 @@ int trouver_et_appliquer_affectation_variable(variables * ens, char *ligne) {
 			default: etat=NOM  ; break;
 			}
 			break;
-
 		case EGAL:
 			switch (ligne[i]) {
 			case '=': etat=ERR  ; break;
@@ -150,7 +147,6 @@ int trouver_et_appliquer_affectation_variable(variables * ens, char *ligne) {
 			default: etat=VAL  ; break;
 			}
 			break;
-
 		case VAL:
 			switch (ligne[i]) {
 			case '=': etat = ERR  ; break;
@@ -158,17 +154,14 @@ int trouver_et_appliquer_affectation_variable(variables * ens, char *ligne) {
 			default: etat = VAL  ; break;
 			}
 			break;
-
 		default: break;
 		}
 		i++;
 	}
-
 	if (etat==VAL) {
 		ajouter_variable (ens, nom, val);
 		affectation = 1;
 	}
-
 	return affectation;
 }
 
