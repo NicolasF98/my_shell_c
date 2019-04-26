@@ -47,4 +47,3 @@ void decouper_ligne(char *ligne, char *ligne_decoupee[]) {
     ligne_decoupee[0] = ligne;
     ligne_decoupee[1] = NULL;
 }
-
