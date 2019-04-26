@@ -16,7 +16,6 @@ struct ensemble_variables {
 };
 
 typedef struct ensemble_variables variables;
-
 #include "variables_base.h"
 
 /* pour aider a la mise au point des programmes - affichage des
