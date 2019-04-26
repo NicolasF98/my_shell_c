@@ -27,7 +27,8 @@ Done.
 
 Toutes commandes sans arguments est executés.
 
-## 3 - Gestin d'un ensemble des variables:
+## 3 - Gestion d'un ensemble des variables:
+
 
 
 

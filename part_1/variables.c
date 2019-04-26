@@ -23,25 +23,32 @@ int ajouter_variable(variables * ens, char *nom, char *valeur) {
        variable ajout�e.
      */
     int i=0;
-    int n=ens->nb;
+    int indice=-1;
+
     while(i!=ens->nb){
-        if(nom==ens->T[i].nom){
+        if(strcmp(nom,ens->T[i].nom)==0){  /* Si le nom de la variable existe deja... */
             strcpy(ens->T[i].valeur,valeur);
-            return i;
+            indice=i;
+            break; /* on break pour return notre indice */
         }
         i++;
     }
-    strcpy(ens->T[n+1].nom,nom);
-    strcpy(ens->T[n+1].valeur,valeur);
-    return (n+1);
+        if(indice==-1){
+            if(ens->nb<NOMBRE_MAX_VARIABLES){
+                strcpy(ens->T[ens->nb].nom,nom);
+                strcpy(ens->T[ens->nb].valeur,valeur);
+                indice=ens->nb;
+                ens->nb++;
+            }
+        }
+    return indice;
 }
 
 int nombre_variables(variables * ens) {
     /*
        Fonction qui renvoie le nombre de variables dans l'ensemble.
      */
-    int n=ens->nb;
-    return n;
+    return ens->nb;
 }
 
 int trouver_variable(variables * ens, char *nom) {
@@ -52,7 +59,7 @@ int trouver_variable(variables * ens, char *nom) {
        contraire elle retourne -1.
      */
     int i = 0;
-    for(;i!=ens->nb;i++){
+    for(;i!=nombre_variables(ens);i++){
         if(ens->T[i].nom==nom){
             return i;
         }
@@ -65,8 +72,8 @@ char *nom_variable(variables * ens, int i) {
        Fonction qui renvoie le nom de la variable a l'indice i ou
        NULL si elle n'existe pas.
      */
-    if(ens->nb<i) return NULL;
-    return ens->T[i].nom;;
+    if(nombre_variables(ens)< i) return NULL;
+    return ens->T[i].nom;
 }
 
 char *valeur_variable(variables * ens, int i) {
@@ -74,7 +81,7 @@ char *valeur_variable(variables * ens, int i) {
        Fonction qui renvoie la valeur de la variable a l'indice i ou
        "" si elle n'existe pas.
      */
-    if(ens->nb<i) return "";
+    if(ens->nb<i) return "rekt";
     return ens->T[i].valeur;
 }
 
@@ -103,24 +110,66 @@ int trouver_et_appliquer_affectation_variable(variables * ens, char *ligne) {
        trouve une affectation. Retourne 1 en cas d'affectation trouvee, 0 dans le
        cas contraire.
      */
-    int i=0,j=0;  /* on utilise 2 compteur: `i`pour parcourir la ligne; `j` pour parcourir le tableau `n` */
-    char *n=NULL; /* création tableau vide */
+    /* Dans cette situation, l'utilisation d'un automate est pratiquement obligatoire 
+    car nous devons nous memoriser dans quel etat nous somme. */
+    enum { ESP_DEB, NOM, EGAL, VAL, ERR } etat=ESP_DEB;
+	int affectation=0;
+	char *nom=NULL, *val=NULL;
+	int i=0;
 
-    while(ligne[i]!='\0'){
-        if(strcmp(&ligne[i]," ")!=0){       /* si la valeur de ligne[i] est différente d'un espace... */
-            n[j]=ligne[i];
-            if(strcmp(&ligne[i],"=")==0 && strcmp(&ligne[i+1]," ")!=0){         /* si la valeur de ligne[i] est identique à "=" ET si ligne[i+1] est différente d'un espace... */
-                strcpy(ens->T[0].nom,n);      /* le mot analysé est stocké dans le tableau `T` dans la cas `nom` à l'indice `k` */
-                strcpy(n,"");        /* on vide notre variable n */
-                j=0;         /* l'indexe de la variable n est remit à 0 */
-            }
-        }
-        i++;         /* on cherche la valeur de `nom` en bouclant temps que ligneet stockant,  */
-        j++;
-    }
-    strcpy(ens->T[0].valeur,n);
+	while (ligne[i]!='\0' && etat!=ERR) {
+		switch (etat) {
 
-    return 0;
+		case ESP_DEB:
+			switch (ligne[i]) {
+			case '=': etat=ERR     ; break;
+			case ' ': etat=ESP_DEB ; break;
+			default :
+				nom=&ligne[i];
+				etat=NOM;
+				break;
+			}
+			break;
+
+		case NOM:
+			switch (ligne[i]) {
+			case '=':
+				ligne[i]='\0';
+				val=&ligne[i+1];
+				etat=EGAL;
+				break;
+			case ' ': etat=ERR  ; break;
+			default: etat=NOM  ; break;
+			}
+			break;
+
+		case EGAL:
+			switch (ligne[i]) {
+			case '=': etat=ERR  ; break;
+			case ' ': etat=ERR  ; break;
+			default: etat=VAL  ; break;
+			}
+			break;
+
+		case VAL:
+			switch (ligne[i]) {
+			case '=': etat = ERR  ; break;
+			case ' ': etat = ERR  ; break;
+			default: etat = VAL  ; break;
+			}
+			break;
+
+		default: break;
+		}
+		i++;
+	}
+
+	if (etat==VAL) {
+		ajouter_variable (ens, nom, val);
+		affectation = 1;
+	}
+
+	return affectation;
 }
 
 void appliquer_expansion_variables(variables * ens, char *ligne_originale, char *ligne_expansee) {
