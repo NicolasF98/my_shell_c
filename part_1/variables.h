@@ -36,3 +36,5 @@ void appliquer_expansion_variables(variables *ens, char *ligne_originale, char *
  * arguments passes */
 void affecter_variables_automatiques(variables *ens, int argc, char *argv[]);
 #endif
+
+/* valide */
