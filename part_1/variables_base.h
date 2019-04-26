@@ -20,3 +20,5 @@ char *valeur_variable(variables *ens, int i);
 
 /* met a jour la valeur de la variable d'indice i (sans effet si indice invalide) */
 void modifier_valeur_variable(variables *ens, int i, char *valeur);
+
+/* valide */
