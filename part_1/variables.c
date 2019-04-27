@@ -202,7 +202,7 @@ void appliquer_expansion_variables(variables * ens, char *ligne_originale, char 
             break;
         
         case DOLLAR:
-            if(isalnum(ligne_originale[i_o]) || (ligne_originale[i_o]!='*') || (ligne_originale[i_o]!='#'){
+            if(isalnum(ligne_originale[i_o]) || (ligne_originale[i_o]!='*') || (ligne_originale[i_o]!='#')){
                 nom[i_n]=ligne_originale[i_o];
                 i_n++;
                 etat=EXPAN;
