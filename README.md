@@ -1,4 +1,4 @@
-# Creating my own shell in C langage
+# Creation d'un Shell en C:
 Université de Grenoble, Licence Informatique et Maths Appliquées , 1ère année
 
 Contact: Nicolas Fournout <nicolas.fournout@etu.univ-grenoble-alpes.fr>
@@ -10,7 +10,7 @@ Contact: Nicolas Fournout <nicolas.fournout@etu.univ-grenoble-alpes.fr>
 
 #### 1 - Boucle de lecture:
 
-- [x] (A) - Question sur `executer_lign_commande`.
+- [x] (A) - Question sur `executer_ligne_commande`.
 - [x] (B) - Explication de `ligne.c`et `varibles.c`.
 
 #### 2 - Lecture d'une ligne:
@@ -22,11 +22,11 @@ Contact: Nicolas Fournout <nicolas.fournout@etu.univ-grenoble-alpes.fr>
 
 - [ ] (E) - Implémentations dans `variable.c`.
 - [x] (F) - Implémentation de `trouver_et_appliquer_affectation_variable`.
-- [ ] (G) - Implémentation de `appliquer_expansion_variables`.
+- [x] (G) - Implémentation de `appliquer_expansion_variables`.
 
 #### 4 - Découpage de la ligne:
 
-- [ ] (H) - Implémentations dans `decoupier_ligne`.
+- [ ] (H) - Implémentations dans `decouper_ligne`.
 
 #### 5 - Variables automatiques:
 
