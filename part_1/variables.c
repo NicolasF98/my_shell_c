@@ -250,7 +250,6 @@ void appliquer_expansion_variables(variables * ens, char *ligne_originale, char 
 }
 
 void affecter_variables_automatiques(variables *ens, int argc, char *argv[]) {
-/*************** A COMPLETER ******************/
     /*
        Il faut definir les variables automatiques a partir des arguments
        donnes au programme :
@@ -260,5 +259,19 @@ void affecter_variables_automatiques(variables *ens, int argc, char *argv[]) {
        les valeurs et l'affecter a $*
        - affecter le nombre d'arguments a $#
      */
-/**********************************************/
+    char Tab[TAILLE_MAX_NOM];
+    char Tab_concat[TAILLE_MAX_NOM]="";
+    int i=0;
+
+    ajouter_variable(ens,"#",Tab);
+    while(i<argc){
+        ajouter_variable(ens,Tab,argv[i]);
+        strcat(Tab_concat,argv[i]);
+        if(i<argc-1){
+            strcat(Tab_concat," ");
+        }
+    }
+    ajouter_variable(ens,"*",Tab_concat);
 }
+
+/* valide */
