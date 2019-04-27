@@ -58,22 +58,24 @@ int trouver_variable(variables * ens, char *nom) {
        l'indice correspondant dans le tableau, dans le cas
        contraire elle retourne -1.
      */
-    int i = 0;
-    for(;i!=nombre_variables(ens);i++){
-        if(ens->T[i].nom==nom){
-            return i;
+    int indice=-1;
+    for(int i=0;i!=nombre_variables(ens);i++){
+        if(strcmp(ens->T[i].nom,nom)==0){ 
+            indice=i;
+            break;
         }
     }
-    return -1;
+    return indice;
 }
 
 char *nom_variable(variables * ens, int i) {
     /*
-       Fonction qui renvoie le nom de la variable a l'indice i ou
+       Fonction qui renvoie le nom de la variable a l'indice i, ou
        NULL si elle n'existe pas.
      */
-    if(nombre_variables(ens)< i) return NULL;
-    return ens->T[i].nom;
+    char *nom=NULL;
+    if(nombre_variables(ens)>i && i>=0) nom=ens->T[i].nom;
+    return nom;
 }
 
 char *valeur_variable(variables * ens, int i) {
@@ -81,8 +83,9 @@ char *valeur_variable(variables * ens, int i) {
        Fonction qui renvoie la valeur de la variable a l'indice i ou
        "" si elle n'existe pas.
      */
-    if(ens->nb<i) return "rekt";
-    return ens->T[i].valeur;
+    char *valeur="";
+    if(nombre_variables(ens)>i && i>=0) valeur=ens->T[i].valeur;
+    return valeur;
 }
 
 void modifier_valeur_variable(variables * ens, int i, char *valeur) {
@@ -112,55 +115,58 @@ int trouver_et_appliquer_affectation_variable(variables * ens, char *ligne) {
      */
     /* Dans cette situation, l'utilisation d'un automate est pratiquement obligatoire 
     car nous devons memoriser dans quel etat nous somme. */
-    enum { ESP_DEB, NOM, EGAL, VAL, ERR } etat=ESP_DEB;
+    enum {ESP_DEB, NOM, EGAL, VAL, ERR} etat=ESP_DEB;
 	int affectation=0;
 	char *nom=NULL, *val=NULL;
 	int i=0;
 
-	while (ligne[i]!='\0' && etat!=ERR) {
-		switch (etat) {
-		case ESP_DEB:
-			switch (ligne[i]) {
-			case '=': etat=ERR     ; break;
-			case ' ': etat=ESP_DEB ; break;
-			default :
-				nom=&ligne[i];
-				etat=NOM;
-				break;
-			}
-			break;
-		case NOM:
-			switch (ligne[i]) {
-			case '=':
-				ligne[i]='\0';
-				val=&ligne[i+1];
-				etat=EGAL;
-				break;
-			case ' ': etat=ERR  ; break;
-			default: etat=NOM  ; break;
-			}
-			break;
-		case EGAL:
-			switch (ligne[i]) {
-			case '=': etat=ERR  ; break;
-			case ' ': etat=ERR  ; break;
-			default: etat=VAL  ; break;
-			}
-			break;
-		case VAL:
-			switch (ligne[i]) {
-			case '=': etat = ERR  ; break;
-			case ' ': etat = ERR  ; break;
-			default: etat = VAL  ; break;
-			}
-			break;
-		default: break;
+	while (ligne[i]!='\0' && etat!=ERR){
+		switch (etat){
+            case ESP_DEB:
+                switch (ligne[i]){
+                    case '=': etat=ERR; break;
+                    case ' ': etat=ESP_DEB; break;
+                    default:
+                        nom=&ligne[i];
+                        etat=NOM;
+                        break;
+                }
+                break;
+
+            case NOM:
+                switch (ligne[i]){
+                    case '=':
+                        ligne[i]='\0';
+                        val=&ligne[i+1];
+                        etat=EGAL;
+                        break;
+                    case ' ': etat=ERR; break;
+                    default: etat=NOM; break;
+                }
+                break;
+
+            case EGAL:
+                switch (ligne[i]){
+                    case '=': etat=ERR; break;
+                    case ' ': etat=ERR; break;
+                    default: etat=VAL; break;
+                }
+                break;
+
+            case VAL:
+                switch (ligne[i]){
+                    case '=': etat=ERR; break;
+                    case ' ': etat=ERR; break;
+                    default: etat=VAL; break;
+                }
+                break;
+		    default: break;
 		}
 		i++;
 	}
-	if (etat==VAL) {
-		ajouter_variable (ens, nom, val);
-		affectation = 1;
+	if (etat==VAL){
+		ajouter_variable(ens, nom, val);
+		affectation=1;
 	}
 	return affectation;
 }
@@ -172,9 +178,75 @@ void appliquer_expansion_variables(variables * ens, char *ligne_originale, char 
   '$nom' ou nom est une chaine de caracteres alphanumeriques ou * ou #) par la
   valeur de la variable correspondante.
 */
-    // A remplacer : le code ci-dessous n'expanse rien
+/* A nouveau, l'utilisation d'un automate obligatoire. */
+    enum {COPY,DOLLAR, EXPAN} etat=COPY;
+    char nom[TAILLE_MAX_NOM]="";
+    int i_o=0, i_e=0, i_n=0;  /* 3 compteurs: i_o pour ligne_originale; i_e pour ligne_expansee; i_n pour parcourir nom. */
+    
+    while(ligne_originale[i_o]!='\0' && etat==EXPAN){
+    switch(etat){
 
-    strcpy(ligne_expansee, ligne_originale);
+        case COPY:
+            switch(ligne_originale[i_o]){
+
+                case '$':
+                    etat=DOLLAR;
+                    break;
+
+                default:
+                    ligne_expansee[i_e]=ligne_originale[i_o];
+                    i_e++;
+                    etat=COPY;
+                    break;
+            }
+            break;
+        
+        case DOLLAR:
+            if(isalnum(ligne_originale[i_o]) || (ligne_originale[i_o]!='*') || (ligne_originale[i_o]!='#'){
+                nom[i_n]=ligne_originale[i_o];
+                i_n++;
+                etat=EXPAN;
+            }
+            else{
+                ligne_expansee[i_e]='$';
+                ligne_expansee[i_e+1]=ligne_originale[i_o];
+                i_e=i_e+2;
+                etat=COPY;
+            }
+            break;
+        
+        case EXPAN:
+            if(isalnum(ligne_originale[i_o])){
+                nom[i_n]=ligne_originale[i_o];
+                i_n++;
+                etat=EXPAN;
+            }
+            else{
+                nom[i_n]='\0';
+                int var_id=trouver_variable(ens,nom);
+                if(var_id!=-1){
+                    char *val=valeur_variable(ens,var_id);
+                    int i_v=0; 
+                    while(val[i_v]!='\0'){
+                        ligne_expansee[i_e]=val[i_v];
+                        i_e++;
+                        i_v++;
+                    }
+                }
+                if(ligne_originale[i_o]!='\0'){
+                    ligne_expansee[i_e]=ligne_originale[i_o];
+                    i_e++;
+                }
+                else{
+                    i_o--;
+                }
+                etat=COPY;
+            }
+            break;
+        }
+        i_o++;
+    }
+    ligne_expansee[i_e]='\0';
 }
 
 void affecter_variables_automatiques(variables *ens, int argc, char *argv[]) {
