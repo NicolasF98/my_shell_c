@@ -30,7 +30,6 @@ int lire_ligne_fichier(FILE * fichier, char *ligne) {
 }
 
 void decouper_ligne(char *ligne, char *ligne_decoupee[]) {
-/*************** A COMPLETER ******************/
     /* 
        Decoupage de la ligne : chaque mot devient une chaine, c'est-a-dire
        est termine par '\0'. ligne_decoupee contient les adresses de ces mots,
@@ -41,9 +40,20 @@ void decouper_ligne(char *ligne, char *ligne_decoupee[]) {
        Au debut d'un mot, on garde son adresse dans ligne_decoupee.
        A la fin d'un mot, on remplace le 1er espace qui le suit par '\0'
      */
-/**********************************************/
-    // A remplacer : cette solution temporaire ne d�coupe rien, elle ne
-    // fonctionne qu'avec les commandes sans argument
-    ligne_decoupee[0] = ligne;
-    ligne_decoupee[1] = NULL;
+   int char_suiv=1, i=0, num=0;
+
+	while(ligne[i]!='\0'){
+		if(ligne[i]==' '&& !char_suiv){
+			ligne[i]='\0';
+		}
+
+		if(ligne[i]!=' ' && char_suiv){
+			ligne_decoupee[num] = &ligne[i];
+			num++;
+		}
+
+		char_suiv=(ligne[i]==' ' || ligne[i]=='\0');
+		i++;
+	}
+ligne_decoupee[num]=NULL;
 }
