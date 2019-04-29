@@ -59,7 +59,7 @@ int trouver_variable(variables * ens, char *nom) {
        contraire elle retourne -1.
      */
     int indice=-1;
-    for(int i=0;i!=nombre_variables(ens);i++){
+    for(int i=0;i<ens->nb;i++){
         if(strcmp(ens->T[i].nom,nom)==0){ 
             indice=i;
             break;
@@ -74,7 +74,7 @@ char *nom_variable(variables * ens, int i) {
        NULL si elle n'existe pas.
      */
     char *nom=NULL;
-    if(nombre_variables(ens)>i && i>=0) nom=ens->T[i].nom;
+    if(ens->nb>i && i>=0) nom=ens->T[i].nom;
     return nom;
 }
 
@@ -84,7 +84,7 @@ char *valeur_variable(variables * ens, int i) {
        "" si elle n'existe pas.
      */
     char *valeur="";
-    if(nombre_variables(ens)>i && i>=0) valeur=ens->T[i].valeur;
+    if(ens->nb>i && i>=0) valeur=ens->T[i].valeur;
     return valeur;
 }
 
@@ -97,7 +97,7 @@ void modifier_valeur_variable(variables * ens, int i, char *valeur) {
 }
 
 void afficher_ensemble_variables(variables * ens) {
-    for (int i = 0; i < nombre_variables(ens); i++) {
+    for (int i = 0; i < ens->nb; i++) {
         printf("%s=%s\n", nom_variable(ens, i), valeur_variable(ens, i));
     }
 }
@@ -183,7 +183,7 @@ void appliquer_expansion_variables(variables * ens, char *ligne_originale, char 
     char nom[TAILLE_MAX_NOM]="";
     int i_o=0, i_e=0, i_n=0;  /* 3 compteurs: i_o pour ligne_originale; i_e pour ligne_expansee; i_n pour parcourir nom. */
     
-    while(ligne_originale[i_o]!='\0' && etat==EXPAN){
+    while(ligne_originale[i_o]!='\0' || etat==EXPAN){
     switch(etat){
 
         case COPY:
@@ -259,19 +259,24 @@ void affecter_variables_automatiques(variables *ens, int argc, char *argv[]) {
        les valeurs et l'affecter a $*
        - affecter le nombre d'arguments a $#
      */
-    char Tab[TAILLE_MAX_NOM];
-    char Tab_concat[TAILLE_MAX_NOM]="";
-    int i=0;
+    char tab[TAILLE_MAX_NOM];
+	char tab_concat[TAILLE_MAX_NOM]="";
+	int i=0;
 
-    ajouter_variable(ens,"#",Tab);
-    while(i<argc){
-        ajouter_variable(ens,Tab,argv[i]);
-        strcat(Tab_concat,argv[i]);
-        if(i<argc-1){
-            strcat(Tab_concat," ");
-        }
-    }
-    ajouter_variable(ens,"*",Tab_concat);
+	sprintf (tab,"%d",argc-1);
+	ajouter_variable(ens,"#",tab);
+
+	while(i<argc){
+		sprintf(tab,"%d",i);
+		ajouter_variable(ens,tab,argv[i]);
+		strcat(tab_concat,argv[i]);
+		if(i<argc-1){
+			strcat(tab_concat," ");
+		}
+		i++;
+	}
+
+    ajouter_variable(ens,"*",tab_concat);
 }
 
 /* valide */
