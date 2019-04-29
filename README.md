@@ -3,7 +3,7 @@ Université de Grenoble, Licence Informatique et Maths Appliquées , 1ère anné
 
 Contact: Nicolas Fournout <nicolas.fournout@etu.univ-grenoble-alpes.fr>
 
-- [ ] 1ère partie:
+- [x] 1ère partie:
 - [ ] 2ème partie: 
 
 ## 1ère partie:
@@ -20,18 +20,17 @@ Contact: Nicolas Fournout <nicolas.fournout@etu.univ-grenoble-alpes.fr>
 
 #### 3 - Gestion d'un ensemble de variables:
 
-- [ ] (E) - Implémentations dans `variable.c`.
+- [x] (E) - Implémentations dans `variable.c`.
 - [x] (F) - Implémentation de `trouver_et_appliquer_affectation_variable`.
 - [x] (G) - Implémentation de `appliquer_expansion_variables`.
 
 #### 4 - Découpage de la ligne:
 
-- [ ] (H) - Implémentations dans `decouper_ligne`.
+- [x] (H) - Implémentations dans `decouper_ligne`.
 
 #### 5 - Variables automatiques:
 
-- [ ] (I) - Implémentations d'une fonction qui concatène des chaînes.
-- [ ] (J) - Implémentations d'une fonction qui affecte à une chaîne l'écriture décimal d'un nombre.
+- [x] (I) - Implémentations d'une fonction qui concatène des chaînes et qui affecte à une chaîne l'écriture décimal d'un nombre.
 
 ## 2ème partie
 
