@@ -34,4 +34,25 @@ Contact: Nicolas Fournout <nicolas.fournout@etu.univ-grenoble-alpes.fr>
 
 ## 2ème partie
 
+#### 1 - Etat des lieux et objectifs:
+
+- [ ] (A) - Création de fichier test en `.sh` avec des instructions conditionnelles ou while.
+
+#### 2 - Quelle sorte de ligne ?:
+
+- [ ] (B) - Où est appelé `decode_entree` ? Compléter la fonction.
+
+#### 3 - Automate d'une instruction conditionnelle:
+
+- [ ] (C) - Compléter les fonctions `init_automate_commades` et `analyse_commande_interne`.
+
+- [ ] (D) - Trouver où sont appelées les fonctions définis dans `commandes.c`. 
+
+#### 4 - Boucles while:
+
+- [ ] (E) - Modification de `lignes.c` afin de numéroter et stocker un ensemble de ligne pour les réexécuter lors d'itérations, tester la mécanique de retour arrière.
+ 
+- [ ] (F) - Dessin de l'automate de structure `while/do/done`.
+
+- [ ] (G) - Compléter `commandes.c`.
 ...
