@@ -55,12 +55,17 @@ int valeur_mnemonique[] = { IF, THEN, ELSE, FI, WHILE, DO, DONE };
 int nombre_mnemoniques = 7;
 
 int decode_entree(char *mot) {
-/*************** A COMPLETER ******************/
     /*
        Comparer la chaine mot passee en parametre aux mnemoniques, retourner la
        valeur du mnemonique si le mot est un mnemonique, retourner INSTRUCTION sinon
      */
-/**********************************************/
+    int i=0;
+    while(i!=nombre_mnemoniques){
+        if(strcmp(mot,mnemonique[i])==0){
+            return valeur_mnemonique[i]; 
+        }
+        i++;
+    }
     return INSTRUCTION;
 }
 

@@ -36,11 +36,11 @@ Contact: Nicolas Fournout <nicolas.fournout@etu.univ-grenoble-alpes.fr>
 
 #### 1 - Etat des lieux et objectifs:
 
-- [ ] (A) - Création de fichier test en `.sh` avec des instructions conditionnelles ou while.
+- [x] (A) - Création de fichier test en `.sh` avec des instructions conditionnelles ou while.
 
 #### 2 - Quelle sorte de ligne ?:
 
-- [ ] (B) - Où est appelé `decode_entree` ? Compléter la fonction.
+- [x] (B) - Où est appelé `decode_entree` ? Compléter la fonction.
 
 #### 3 - Automate d'une instruction conditionnelle:
 
