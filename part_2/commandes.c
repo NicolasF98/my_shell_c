@@ -1,27 +1,3 @@
-/*
-Interpréteur de commandes à but pédagogique
-Copyright (C) 2011-2018 Guillaume Huard
-Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les
-termes de la Licence Publique Générale GNU publiée par la Free Software
-Foundation (version 2 ou bien toute autre version ultérieure choisie par vous).
-
-Ce programme est distribué car potentiellement utile, mais SANS AUCUNE
-GARANTIE, ni explicite ni implicite, y compris les garanties de
-commercialisation ou d'adaptation dans un but spécifique. Reportez-vous à la
-Licence Publique Générale GNU pour plus de détails.
-
-Vous devez avoir reçu une copie de la Licence Publique Générale GNU en même
-temps que ce programme ; si ce n'est pas le cas, écrivez à la Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307,
-États-Unis.
-
-Contact: Guillaume.Huard@imag.fr
-	 Bâtiment IMAG
-	 700 avenue centrale, domaine universitaire
-	 38401 Saint Martin d'Hères
-*/
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -167,7 +143,7 @@ int analyse_commande_interne(automate * A, char *ligne_courante) {
          */
         debug("Commande interne reconnue : %s\n", bout_de_ligne);
         /*
-           Pour pouvoir exécuter ce qui suit le mot clé, la ligne courante
+           Pour pouvoir exï¿½cuter ce qui suit le mot clï¿½, la ligne courante
            devient ce qui reste apres le premier mot :
            on ecrase simplement le debut de la chaine.
          */
@@ -187,10 +163,10 @@ int analyse_commande_interne(automate * A, char *ligne_courante) {
     }
 /*************** A COMPLETER ******************/
     /* 
-       Si vous arrivez a  l'etape du while, il faut commencer
+       Si vous arrivez aï¿½ l'etape du while, il faut commencer
        par un traitement similaire au cas du if : executer le
        reste de la ligne pour recuperer le resultat du test.
-       Il faut egalement penser a  memoriser la ligne courante
+       Il faut egalement penser aï¿½ memoriser la ligne courante
        pour pouvoir y revenir en fin de boucle.
      */
     /*
