@@ -43,8 +43,8 @@ Contact: Nicolas Fournout <nicolas.fournout@etu.univ-grenoble-alpes.fr>
 - [x] (B) - Où est appelé `decode_entree` ? Compléter la fonction.
 
 #### 3 - Automate d'une instruction conditionnelle:
-
-- [ ] (C) - Compléter les fonctions `init_automate_commades` et `analyse_commande_interne`.
+S
+- [x] (C) - Compléter les fonctions `init_automate_commades` et `analyse_commande_interne`.
 
 - [ ] (D) - Trouver où sont appelées les fonctions définis dans `commandes.c`. 
 
