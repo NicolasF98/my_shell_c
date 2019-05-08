@@ -59,14 +59,16 @@ int decode_entree(char *mot) {
        Comparer la chaine mot passee en parametre aux mnemoniques, retourner la
        valeur du mnemonique si le mot est un mnemonique, retourner INSTRUCTION sinon
      */
+    int sortie=INSTRUCTION;
     int i=0;
     while(i!=nombre_mnemoniques){
         if(strcmp(mot,mnemonique[i])==0){
-            return valeur_mnemonique[i]; 
+            sortie=valeur_mnemonique[i]; 
+            break;
         }
         i++;
     }
-    return INSTRUCTION;
+    return sortie;
 }
 
 void init_automate_commandes(automate * A) {
@@ -75,18 +77,53 @@ void init_automate_commandes(automate * A) {
     /* La majorite des transitions vont dans l'etat d'erreur et la sortie est
        majoritairement NON
      */
-    for (i = 0; i < NB_MAX_ETATS; i++)
+    for (i = 0; i < NB_MAX_ETATS; i++){
         for (j = 0; j < NB_MAX_ENTREES; j++) {
             A->transitions[i][j] = ERREUR;
             A->sortie[i][j] = NON;
         }
-
-/*************** A COMPLETER ******************/
+    }
+    
     /*
        - toutes les transitions qui ne sont pas egales a la valeur par defaut
-       - toutes les sorties qui ne sont pas egales a la valeur par defaut 
-     */
-/**********************************************/
+    */
+
+    /* etat NORMAL */
+    A->transitions[NORMAL][INSTRUCTION]=NORMAL;
+    A->transitions[NORMAL][IF_VRAI]=ATTENTE_THEN_VRAI;
+    A->transitions[NORMAL][IF_FAUX]=ATTENTE_THEN_FAUX;
+    A->sortie[NORMAL][INSTRUCTION]=OUI;
+
+    /* etat ATTENTE_THEN_VRAI */
+    A->transitions[ATTENTE_THEN_VRAI][THEN]=DANS_THEN;
+    A->sortie[ATTENTE_THEN_VRAI][THEN]=OUI;
+
+    /* etat DANS_THEN */
+    A->transitions[DANS_THEN][INSTRUCTION]=DANS_THEN;
+    A->transitions[DANS_THEN][ELSE]=ATTENTE_FI;
+    A->transitions[DANS_THEN][FI]=NORMAL;
+    A->sortie[DANS_THEN][INSTRUCTION]=OUI;
+
+    /* etat ATTENTE_FI */
+    A->transitions[ATTENTE_FI][INSTRUCTION]=ATTENTE_FI;
+    A->transitions[ATTENTE_FI][FI]=NORMAL;
+    A->sortie[ATTENTE_FI][INSTRUCTION]=NON;
+    
+    /* etat ATTENTE_THEN_FAUX */
+    A->transitions[ATTENTE_THEN_FAUX][THEN]=ATTENTE_ELSE_OU_FI;
+    A->sortie[ATTENTE_THEN_FAUX][THEN]=NON;
+
+    /* etat ATTENTE_ELSE_OU_FI */
+    A->transitions[ATTENTE_ELSE_OU_FI][INSTRUCTION]=ATTENTE_ELSE_OU_FI;
+    A->transitions[ATTENTE_ELSE_OU_FI][ELSE]=DANS_ELSE;
+    A->transitions[ATTENTE_ELSE_OU_FI][FI]=NORMAL;
+    A->sortie[ATTENTE_ELSE_OU_FI][INSTRUCTION]=NON;
+
+    /* etat DANS_ELSE */
+    A->transitions[DANS_ELSE][INSTRUCTION]=DANS_ELSE;
+    A->transitions[DANS_ELSE][FI]=NORMAL;
+    A->sortie[ATTENTE_FI][INSTRUCTION]=OUI;
+
 
 /**** etat initial ******************************/
     A->etat = NORMAL;
