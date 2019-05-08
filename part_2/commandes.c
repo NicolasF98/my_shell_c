@@ -58,7 +58,7 @@ int decode_entree(char *mot) {
     /*
        Comparer la chaine mot passee en parametre aux mnemoniques, retourner la
        valeur du mnemonique si le mot est un mnemonique, retourner INSTRUCTION sinon
-     */
+    */
     int sortie=INSTRUCTION;
     int i=0;
     while(i!=nombre_mnemoniques){
@@ -76,14 +76,14 @@ void init_automate_commandes(automate * A) {
 
     /* La majorite des transitions vont dans l'etat d'erreur et la sortie est
        majoritairement NON
-     */
+    */
     for (i = 0; i < NB_MAX_ETATS; i++){
         for (j = 0; j < NB_MAX_ENTREES; j++) {
             A->transitions[i][j] = ERREUR;
             A->sortie[i][j] = NON;
         }
     }
-    
+
     /*
        - toutes les transitions qui ne sont pas egales a la valeur par defaut
     */
@@ -125,7 +125,7 @@ void init_automate_commandes(automate * A) {
     A->sortie[ATTENTE_FI][INSTRUCTION]=OUI;
 
 
-/**** etat initial ******************************/
+/**** etat initial ****/
     A->etat = NORMAL;
 }
 
@@ -133,7 +133,7 @@ int selectionne_alternative(char *ligne_commande, int valeur_vrai, int valeur_fa
     /*
        Dans le cas d'une structure conditionnelle, il faut tout de suite
        executer le reste de la ligne pour recuperer le resultat du test.
-     */
+    */
     int resultat_test = executer_ligne_commande(ligne_commande);
     debug("Resultat du test : ");
     if (resultat_test) {
@@ -168,59 +168,60 @@ int analyse_commande_interne(automate * A, char *ligne_courante) {
        Par defaut, on indiquera a la fonction appelante qu'elle doit
        executer la commande, on passera cela a NON si on rencontre une
        commande interne completement resolue ici
-     */
-    int code_sortie = OUI;
-
+    */
+    int code_sortie=OUI;
     debug("J'essaie de reconnaitre une commande interne\n");
     /*
        On extrait d'abord le premier mot de la ligne pour voir si c'est un
        mnemonique de commande interne
-     */
+    */
     extrait_premier_mot(ligne_courante, bout_de_ligne);
     entree = decode_entree(bout_de_ligne);
 
-    if (entree != INSTRUCTION) {
+    if(entree!=INSTRUCTION){
         /*
            Si on a reconnu un mnemonique, on l'affiche (debug)
-         */
+        */
         debug("Commande interne reconnue : %s\n", bout_de_ligne);
         /*
-           Pour pouvoir ex�cuter ce qui suit le mot cl�, la ligne courante
+           Pour pouvoir executer ce qui suit le mot cle, la ligne courante
            devient ce qui reste apres le premier mot :
            on ecrase simplement le debut de la chaine.
-         */
+        */
         int len = strlen(bout_de_ligne);
-        for (i=len; ligne_courante[i] != '\0'; i++)
+        for (i=len; ligne_courante[i]!='\0'; i++)
             ligne_courante[i-len] = ligne_courante[i];
-        ligne_courante[i-len] = '\0';
+        ligne_courante[i-len]='\0';
     }
-
     /*
        Dans le cas d'une structure conditionnelle, le code de sortie sera
        NON (puisqu'on execute la fin de ligne pour le test).
     */
-    if (entree == IF) {
-        entree = selectionne_alternative(ligne_courante, IF_VRAI, IF_FAUX);
-        code_sortie = NON;
+
+    if (entree==IF){
+        entree=selectionne_alternative(ligne_courante, IF_VRAI, IF_FAUX);
+        code_sortie=NON;
     }
-/*************** A COMPLETER ******************/
     /* 
-       Si vous arrivez a� l'etape du while, il faut commencer
+       Si vous arrivez a l'etape du while, il faut commencer
        par un traitement similaire au cas du if : executer le
        reste de la ligne pour recuperer le resultat du test.
-       Il faut egalement penser a� memoriser la ligne courante
+       Il faut egalement penser a memoriser la ligne courante
        pour pouvoir y revenir en fin de boucle.
-     */
+    */
+
     /*
-       Dans tous les cas, calculer code_sortie et changer
+       Dans tous les cas, il faut calculer code_sortie et changer
        d'etat en fonction de etat_courant et de entree.
-     */
-/**********************************************/
+    */
+    int etat_suivant = A->transitions[A->etat][entree];
+    code_sortie=A->sortie[A->etat][entree];
+    A->etat=etat_suivant;
 
     /* prise en compte du code de sortie, la fonction doit retourner :
        - 0 si la ligne ne doit pas etre executee (commande interne geree ici)
        - 1 sinon
        Ce sont les valeurs choisies pour NON et OUI
-     */
+    */
     return code_sortie;
 }
