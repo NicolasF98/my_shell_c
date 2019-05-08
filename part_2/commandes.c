@@ -77,10 +77,10 @@ void init_automate_commandes(automate * A) {
     /* La majorite des transitions vont dans l'etat d'erreur et la sortie est
        majoritairement NON
     */
-    for (i = 0; i < NB_MAX_ETATS; i++){
-        for (j = 0; j < NB_MAX_ENTREES; j++) {
-            A->transitions[i][j] = ERREUR;
-            A->sortie[i][j] = NON;
+    for(i=0; i< NB_MAX_ETATS; i++){
+        for(j=0; j<NB_MAX_ENTREES; j++) {
+            A->transitions[i][j]=ERREUR;
+            A->sortie[i][j]=NON;
         }
     }
 
