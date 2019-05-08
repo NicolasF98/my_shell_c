@@ -46,13 +46,13 @@ Contact: Nicolas Fournout <nicolas.fournout@etu.univ-grenoble-alpes.fr>
 S
 - [x] (C) - Compléter les fonctions `init_automate_commades` et `analyse_commande_interne`.
 
-- [ ] (D) - Trouver où sont appelées les fonctions définis dans `commandes.c`. 
+- [x] (D) - Trouver où sont appelées les fonctions définis dans `commandes.c`. 
 
 #### 4 - Boucles while:
 
-- [ ] (E) - Modification de `lignes.c` afin de numéroter et stocker un ensemble de ligne pour les réexécuter lors d'itérations, tester la mécanique de retour arrière.
+- [x] (E) - Modification de `lignes.c` afin de numéroter et stocker un ensemble de ligne pour les réexécuter lors d'itérations, tester la mécanique de retour arrière.
  
 - [ ] (F) - Dessin de l'automate de structure `while/do/done`.
 
-- [ ] (G) - Compléter `commandes.c`.
+- [ ] (G) - Compléter `commandes.c` en implémentant `while` dans l'automate.
 ...
