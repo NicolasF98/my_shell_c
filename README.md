@@ -52,7 +52,7 @@ S
 
 - [x] (E) - Modification de `lignes.c` afin de numéroter et stocker un ensemble de ligne pour les réexécuter lors d'itérations, tester la mécanique de retour arrière.
  
-- [ ] (F) - Dessin de l'automate de structure `while/do/done`.
+- [x] (F) - Dessin de l'automate de structure `while/do/done`.
 
-- [ ] (G) - Compléter `commandes.c` en implémentant `while` dans l'automate.
+- [x] (G) - Compléter `commandes.c` en implémentant `while` dans l'automate.
 ...
