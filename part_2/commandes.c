@@ -90,6 +90,7 @@ void init_automate_commandes(automate * A) {
 
     /* etat NORMAL */
     A->transitions[NORMAL][INSTRUCTION]=NORMAL;
+
     A->transitions[NORMAL][IF_VRAI]=ATTENTE_THEN_VRAI;
     A->transitions[NORMAL][IF_FAUX]=ATTENTE_THEN_FAUX;
     A->sortie[NORMAL][INSTRUCTION]=OUI;
@@ -124,6 +125,20 @@ void init_automate_commandes(automate * A) {
     A->transitions[DANS_ELSE][FI]=NORMAL;
     A->sortie[ATTENTE_FI][INSTRUCTION]=OUI;
 
+    /** boucle WHILE **/
+    A->transitions[NORMAL][INSTRUCTION]=NORMAL;
+
+    A->transitions[NORMAL][WHILE_VRAI]=ATTENTE_DO_VRAI;
+    A->transitions[ATTENTE_DO_VRAI][DO]=DANS_DO;
+    A->transitions[DANS_DO][DONE]=NORMAL;
+    A->transitions[DANS_DO][INSTRUCTION]=DANS_DO;
+    A->sortie[ATTENTE_DO_VRAI][DO]=OUI;
+    A->sortie[DANS_DO][INSTRUCTION]=OUI;
+    A->sortie[DANS_DO][DONE]=BOUCLE;
+
+    A->transitions[NORMAL][WHILE_FAUX]=ATTENTE_DO_FAUX;
+    A->transitions[ATTENTE_DO_FAUX][DO]=ATTENTE_DONE;
+    A->transitions[ATTENTE_DONE][DONE]=NORMAL;
 
 /**** etat initial ****/
     A->etat = NORMAL;
