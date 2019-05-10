@@ -213,18 +213,20 @@ int analyse_commande_interne(automate * A, char *ligne_courante) {
        NON (puisqu'on execute la fin de ligne pour le test).
     */
 
-    if (entree==IF){
+    if(entree==IF){
         entree=selectionne_alternative(ligne_courante, IF_VRAI, IF_FAUX);
         code_sortie=NON;
     }
     /* 
-       Si vous arrivez a l'etape du while, il faut commencer
-       par un traitement similaire au cas du if : executer le
+       Traitement similaire au cas du if : on execute le
        reste de la ligne pour recuperer le resultat du test.
-       Il faut egalement penser a memoriser la ligne courante
-       pour pouvoir y revenir en fin de boucle.
+       On memorise la ligne courante pour pouvoir y revenir en fin de boucle.
     */
-
+   if(entree==WHILE){
+       entree=selectionne_alternative(ligne_courante,WHILE_VRAI,WHILE_FAUX);
+       code_sortie=NON;
+       A->ligne_boucle=obtenir_numero_ligne();
+   }
     /*
        Dans tous les cas, il faut calculer code_sortie et changer
        d'etat en fonction de etat_courant et de entree.
@@ -232,11 +234,6 @@ int analyse_commande_interne(automate * A, char *ligne_courante) {
     int etat_suivant = A->transitions[A->etat][entree];
     code_sortie=A->sortie[A->etat][entree];
     A->etat=etat_suivant;
-
-    /* prise en compte du code de sortie, la fonction doit retourner :
-       - 0 si la ligne ne doit pas etre executee (commande interne geree ici)
-       - 1 sinon
-       Ce sont les valeurs choisies pour NON et OUI
-    */
+    
     return code_sortie;
 }
