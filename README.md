@@ -1,4 +1,4 @@
-# Creation d'un Shell en C:
+# Creation d'un mini Shell en C:
 Université de Grenoble, Licence Informatique et Maths Appliquées , 1ère année
 
 Contact: Nicolas Fournout <nicolas.fournout@etu.univ-grenoble-alpes.fr>
