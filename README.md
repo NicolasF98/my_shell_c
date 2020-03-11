@@ -4,7 +4,7 @@ Université de Grenoble, Licence Informatique et Maths Appliquées , 1ère anné
 Contact: Nicolas Fournout <nicolas.fournout@etu.univ-grenoble-alpes.fr>
 
 - [x] 1ère partie:
-- [ ] 2ème partie: 
+- [x] 2ème partie: 
 
 ## 1ère partie:
 
